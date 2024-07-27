@@ -1,17 +1,17 @@
 import { WebSocket } from "ws";
 type WebSocketArray = WebSocket[]
 
-enum event_types {
-    CREATE_ROOM,
-    JOIN_ROOM,
-    LEAVE_ROOM,
-    BROADCAST_MESSAGE,
-    CHAT,
-    ROOM_CREATED,
-    ROOM_JOINED,
-    ROOM_DELETED,
-    ROOM_LEFT,
-    ERROR
+const event_types = {
+    CREATE_ROOM:"CREATE_ROOM",
+    JOIN_ROOM:"JOIN_ROOM",
+    LEAVE_ROOM:"LEAVE_ROOM",
+    BROADCAST_MESSAGE:"BROADCAST_MESSAGE",
+    CHAT:"CHAT",
+    ROOM_CREATED:"ROOM_CREATED",
+    ROOM_JOINED:"ROOM_JOINED",
+    ROOM_DELETED:"ROOM_DELETED",
+    ROOM_LEFT:"ROOM_LEFT",
+    ERROR:"ERROR"
 }
 
 const create_room = (socket: WebSocket, rooms:Map<String, WebSocketArray>, room_id:string)=>{

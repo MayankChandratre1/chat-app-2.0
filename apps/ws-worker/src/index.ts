@@ -26,6 +26,8 @@ webSocketServer.on('connection',(socket)=>{
 
     socket.on('message',(data_string)=>{
         const data = JSON.parse(data_string.toString())
+        console.log(data);
+        
         // console.log(data);
 
         switch(data.type){

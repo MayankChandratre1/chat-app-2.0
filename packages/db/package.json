@@ -1,0 +1,22 @@
+{
+  "name": "db",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "tsc -b && node dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/mongoose": "^5.11.97",
+    "dotenv": "^16.4.5",
+    "mongoose": "^8.5.1"
+  },
+  "exports": {
+    "./db_client": "./src/index.ts",
+    "./models/*": "./models/*.ts"
+  }
+}
