@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String  @id @default(uuid())
+  email    String  @unique
+  name     String
+  password String
+  profile_pic String @default("https://www.gravatar.com/avatar/")
+  rooms    Room[]  @relation("User")
+  Room     Room?   @relation(fields: [roomId], references: [id])
+  roomId   String?
+  messages Message? @relation("user_message")
+}
+
+model Room {
+  id      String @id @default(uuid())
+  name    String
+  messages Message[]
+  members User[]
+  owner   String?
+  user    User?   @relation("User", fields: [owner], references: [id])
+}
+
+model Message {
+  id        String @id @default(uuid())
+  content   String
+  createdAt DateTime @default(now())
+  userId    String @unique
+  user      User   @relation(name:"user_message",fields: [userId], references: [id])
+  roomId    String
+  room      Room   @relation(fields: [roomId], references: [id])
+}
