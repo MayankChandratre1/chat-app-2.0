@@ -1,22 +1,19 @@
 {
-  "name": "db",
+  "name": "@repo/db",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "tsc -b && node dist/index.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/mongoose": "^5.11.97",
-    "dotenv": "^16.4.5",
-    "mongoose": "^8.5.1"
+    "@prisma/client": "^5.17.0",
+    "prisma": "^5.17.0"
   },
-  "exports": {
-    "./db_client": "./src/index.ts",
-    "./models/*": "./models/*.ts"
+  "exports":{
+    "./prisma":"./src/index.ts"
   }
 }
