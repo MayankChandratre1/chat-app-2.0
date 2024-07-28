@@ -1,9 +1,7 @@
 "use client"
-import signup from '@/app/lib/actions/signup'
 import Button from '@/components/Button'
 import LabelledInput from '@/components/LabelledInput'
 import NamedCard from '@/components/NamedCard'
-import { log } from 'console'
 import { signIn } from 'next-auth/react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -27,7 +25,6 @@ const handleSubmit = async () => {
             ...formdata,
             redirect:false
         })
-        console.log(res);
         router.push("/")
     }else{
         alert("Check credentials and try again")
@@ -42,8 +39,6 @@ const handleSubmit = async () => {
             <LabelledInput name='Password' placeholder='password' type='password' onChange={handleChange} />
             <Button onClick={async () => {
     if(formdata.username && formdata.password){
-        console.log(formdata);
-        
         const res = await signIn('credentials',{
             ...formdata,
             redirect:false

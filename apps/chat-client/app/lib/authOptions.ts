@@ -1,7 +1,6 @@
 import CredentialsProvider from "next-auth/providers/credentials";
-import { signIn } from "next-auth/react";
-import { pages } from "next/dist/build/templates/app-page";
 import prisma from '@repo/db/prisma'
+import bcrypt from "bcrypt"
 const authOptions = {
 providers: [
   CredentialsProvider({
@@ -23,11 +22,13 @@ providers: [
             username
           }
         })
-        console.log(existingUser);
-        if(!existingUser || existingUser.password != password){
-          return null
+        if(existingUser){
+          const verified = await bcrypt.compare(password || "", existingUser.password)
+          console.log(verified);
+          if(verified)
+            return existingUser
         }
-        return existingUser
+        return null
     }
   })
 ],

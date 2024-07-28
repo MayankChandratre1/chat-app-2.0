@@ -1,6 +1,6 @@
 'use server'
 import prisma from '@repo/db/prisma'
-import { signIn } from 'next-auth/react'
+import bcrypt from "bcrypt"
 
 type signupProps = {
     username: string,
@@ -11,10 +11,11 @@ type signupProps = {
 
 const signup = async (data:signupProps) =>{
     try{
+        const password = data.password
+        const hashedPassword = await bcrypt.hash(password, 10)
         const user = await prisma.user.create({
-            data:data
+            data:{...data, password:hashedPassword}
         })
-        
         return {error: null, user:user};
     }catch(err){
         console.error(err);

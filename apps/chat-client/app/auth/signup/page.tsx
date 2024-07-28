@@ -25,14 +25,15 @@ const SignUpPage = () => {
         const signUpResult = await signup(formdata);
         if(signUpResult && !signUpResult.error){
           const res = await signIn('credentials',{
-            username: signUpResult.user?.username,
-            password: signUpResult.user?.password,
+            username: formdata.username,
+            password: formdata.password,
             redirect: false
           })
           if(res?.error){
             alert("Something went wrong, Try again! ")
-            console.log(res);
             router.push("/auth/signup")
+          }else{
+            router.push("/")
           }
         }else{
           alert("Something went wrong, Try Again! ")
