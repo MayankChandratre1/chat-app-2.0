@@ -10,7 +10,8 @@ datasource db {
 model User {
   id       String  @id @default(uuid())
   email    String  @unique
-  name     String
+  phone String? @unique
+  username     String
   password String
   profile_pic String @default("https://www.gravatar.com/avatar/")
   rooms    Room[]  @relation("User")

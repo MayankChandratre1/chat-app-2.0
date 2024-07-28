@@ -1,4 +1,7 @@
 import CredentialsProvider from "next-auth/providers/credentials";
+import { signIn } from "next-auth/react";
+import { pages } from "next/dist/build/templates/app-page";
+import prisma from '@repo/db/prisma'
 const authOptions = {
 providers: [
   CredentialsProvider({
@@ -13,11 +16,25 @@ providers: [
       password: { label: "Password", type: "password" }
     },
     async authorize(credentials, req) {
-        return null;
+        const username = credentials?.username
+        const password = credentials?.password
+        const existingUser = await prisma?.user.findFirst({
+          where:{
+            username
+          }
+        })
+        console.log(existingUser);
+        if(!existingUser || existingUser.password != password){
+          return null
+        }
+        return existingUser
     }
   })
 ],
-secrets: process.env.NEXTAUTH_SECRET || "secret"
+secrets: process.env.NEXTAUTH_SECRET || "secret",
+pages:{
+  signIn:"/auth/signin"
+}
 }
 
 export default authOptions;
