@@ -1,0 +1,47 @@
+import React from 'react'
+import Avatar from '../Avatar'
+import getRoom from '@/app/lib/actions/getRoom'
+import Loader from '../Loader'
+import SendMessageBox from './SendMessageBox'
+import getUser from '@/app/lib/actions/getUser'
+
+const Room = async ({roomId}:{roomId:string}) => {
+  const room = await getRoom(roomId)
+  const user = await getUser()
+
+  return (
+    <div className='text-white col-span-6 flex flex-col max-h-screen'>
+      <div className='px-5 py-3 flex items-center gap-5 text-2xl bg-black'>
+          <Avatar name={room?.name} size='small' />
+          <p>{room?.name}</p>
+      </div>
+      <div className='p-3 flex-1 flex flex-col justify-between '>
+        <div>
+          {room ? 
+          <div className='overflow-y-scroll no-scrollbar max-h-[75vh]'>
+            {room.messages.map(message=>{
+              if(message.username == user?.username){
+                return(
+                  <div className='my-4 mx-1 flex flex-col gap-1 items-end text-sm '>
+                    <span className='text-green-500 text-xs opacity-90 font-semibold px-3'>{"You"}</span> <p className='px-3 py-2 bg-blue-500 rounded-2xl'>{message.content}</p><p className='text-xs font-thin opacity-50 py-1'>{message.createdAt.toUTCString().split(' ')[1] + " " + message.createdAt.toUTCString().split(' ')[2] + ", " + message.createdAt.toUTCString().split(' ')[4]}</p>
+                  </div>
+                )
+              }
+              return(
+                <div className='my-4 mx-1 flex flex-col gap-1 items-start text-sm'>
+                  <span className='text-blue-600 text-xs opacity-90 font-semibold px-3'>{message.username ? message.username:"Anonymus"}</span> <p className='px-3 py-2 bg-blue-500 rounded-2xl'>{message.content}</p><p className='text-xs font-thin opacity-50 py-1'>{message.createdAt.toUTCString().split(' ')[1] + " " + message.createdAt.toUTCString().split(' ')[2] + ", " + message.createdAt.toUTCString().split(' ')[4]}</p>
+                </div>
+              )
+            })}
+          </div>:
+          <div><Loader/></div>}
+        </div>
+        <div className=''>
+          <SendMessageBox roomId={roomId} />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default Room
