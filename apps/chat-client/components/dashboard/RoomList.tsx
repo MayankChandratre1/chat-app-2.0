@@ -54,7 +54,7 @@ const RoomCard = ({roomId, name}:{roomId:string, name:string})=>{
     const router = useRouter()
     return (
         <button className='w-full bg-gray-700 p-3 flex gap-3 items-center border-b border-b-gray-800 hover:bg-gray-800' onClick={()=>{
-            create_websocket_room({roomId})
+            // create_websocket_room({roomId})
             router.push("/dashboard/"+roomId)
         }}>
             <Avatar size='small' name={name} />

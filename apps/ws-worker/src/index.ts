@@ -56,7 +56,10 @@ webSocketServer.on('connection',(socket)=>{
         
     })
 
-    socket.send("You are connected to the server ws://localhost:8080")
+    socket.send(JSON.stringify({
+        type:"CONNECTED",
+        message:"You are connected to the server ws://localhost:8080"
+    }))
 })
 
 

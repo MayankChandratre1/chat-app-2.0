@@ -23,27 +23,35 @@ const MessagesWindow = ({messages, roomId}:{
     ws.current.onopen = ()=>{
       console.log("CONN");
       ws.current?.send(JSON.stringify({
-        type:"JOIN_ROOM",
+        type:"CREATE_ROOM",
         roomId
-      }))
+    }))
+     
       if(ws.current){
-        ws.current.onmessage = async (mes)=>{
-          const data:{
-            type: string,
-            message:string
-          } = await JSON.parse(mes.data)
-          console.log(mes);
-          
-          if(data.type === 'CHAT'){
-            const message_data = await JSON.parse(data.message)
-            console.log(message_data);
-            const new_message_data = {
-              ...message_data,
-              createdAt: new Date(message_data.createdAt)
-            }
-            setMessagesList(prev => [...prev, new_message_data])
+        ws.current.onmessage = async (message) => {
+          const data = await JSON.parse(message.data)
+          switch(data.type){
+              case "ROOM_CREATED":{
+                  ws.current?.send(JSON.stringify({
+                      type:"JOIN_ROOM",
+                      roomId
+                  }))
+              }
+              break;
+              case "CHAT":{
+                const message_data = await JSON.parse(data.message)
+                console.log(message_data);
+                const new_message_data = {
+                  ...message_data,
+                  createdAt: new Date(message_data.createdAt)
+                }
+                setMessagesList(prev => [...prev, new_message_data])
+              }
+              default:break;
           }
-        }
+          console.log("WS_LOGIC: "+ JSON.stringify(data));
+          
+      }
       }
     }
     ws.current.onclose = ()=>{
@@ -59,6 +67,51 @@ const MessagesWindow = ({messages, roomId}:{
       ws.current?.close()
     }
   },[roomId, messagesList])
+  // useEffect(()=>{
+  //   ws.current =  new WebSocket(process.env.WEBSOCKET_URL||"ws://localhost:8080")
+  //   ws.current.onopen = ()=>{
+  //     console.log("CONN");
+  //     ws.current?.send(JSON.stringify({
+  //       type:"JOIN_ROOM",
+  //       roomId
+  //     }))
+  //     if(ws.current){
+  //       ws.current.onmessage = async (mes)=>{
+  //         const data:{
+  //           type: string,
+  //           message:string
+  //         } = await JSON.parse(mes.data)
+  //         console.log(mes);
+          
+  //         if(data.type === 'CHAT'){
+  //           const message_data = await JSON.parse(data.message)
+  //           console.log(message_data);
+  //           const new_message_data = {
+  //             ...message_data,
+  //             createdAt: new Date(message_data.createdAt)
+  //           }
+  //           setMessagesList(prev => [...prev, new_message_data])
+  //         }
+  //       }
+  //     }
+  //   }
+  //   ws.current.onclose = ()=>{
+  //     console.log("Closed");
+  //   }
+  //   return () => {
+  //     if(ws.current?.readyState === WebSocket.OPEN){
+  //       ws.current?.send(JSON.stringify({
+  //         type:"LEAVE_ROOM",
+  //         roomId:roomId
+  //       }))
+  //     }
+  //     ws.current?.close()
+  //   }
+  // },[roomId, messagesList])
+
+
+
+
   return (
     <>
     <div className='overflow-y-scroll flex-1 no-scrollbar max-h-[75vh]'>
