@@ -25,7 +25,7 @@ export default function Home() {
 
 
   return (
-    <div className="bg-blue-950 min-h-screen p-5 grid place-items-center">
+    <div className="bg-gray-900 min-h-screen p-5 grid place-items-center">
         <Loader />
     </div>
   );

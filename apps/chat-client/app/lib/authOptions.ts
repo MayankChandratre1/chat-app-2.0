@@ -40,8 +40,7 @@ callbacks:{
     if (user) {
         token.uid = user.id;
         token.phone = user.phone,
-        token.username = user.username,
-        token.image = user.profile_pic
+        token.username = user.username
     }
     return token;
     },
@@ -49,8 +48,7 @@ callbacks:{
       if (session.user) {
           session.user.id = token.uid,
           session.user.phone = token.phone,
-          session.user.username = token.username,
-          session.user.image = token.image
+          session.user.username = token.username
       }
       return session
   }

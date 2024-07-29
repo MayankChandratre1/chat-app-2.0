@@ -15,6 +15,7 @@ const getUser = async ()=>{
             id:user.id
         },
         select:{
+            id:true,
             username:true,
             phone:true,
             email:true,

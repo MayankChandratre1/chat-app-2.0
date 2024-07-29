@@ -1,5 +1,6 @@
 import getRoom from '@/app/lib/actions/getRoom';
 import getUser from '@/app/lib/actions/getUser';
+import MyProfile from '@/components/profile/MyProfile';
 
 import React from 'react'
 
@@ -7,8 +8,8 @@ import React from 'react'
     const data = await getUser()
     
   return (
-    <div>
-        {"Test Data"}
+    <div className='bg-gray-900 min-h-screen'>
+        <MyProfile />
     </div>
   )
 }
