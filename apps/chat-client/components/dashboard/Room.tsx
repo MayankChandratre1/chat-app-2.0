@@ -4,21 +4,46 @@ import getRoom from '@/app/lib/actions/getRoom'
 import Loader from '../Loader'
 import SendMessageBox from './SendMessageBox'
 import getUser from '@/app/lib/actions/getUser'
+import Button from '../Button'
+import AddMember from './AddMember'
+import MessagesWindow from './MessagesWindow'
+
 
 const Room = async ({roomId}:{roomId:string}) => {
   const room = await getRoom(roomId)
   const user = await getUser()
+  
+  if(roomId == 'base'){
+    return (
+      <div className='text-white col-span-6  max-h-screen grid place-items-center text-sm italic opacity-50'>
+        Open a chat
+      </div>
+    )
+  }
 
   return (
     <div className='text-white col-span-6 flex flex-col max-h-screen'>
-      <div className='px-5 py-3 flex items-center gap-5 text-2xl bg-black'>
-          <Avatar name={room?.name} size='small' />
-          <p>{room?.name}</p>
+      <div className='px-5 py-3 flex items-center justify-between gap-5 text-2xl bg-black'>
+          <div className='flex items-center gap-5'>
+            <Avatar name={room?.name} size='small' />
+            <p>{room?.name}</p>
+          </div>
+          <AddMember roomId={roomId} />
       </div>
-      <div className='p-3 flex-1 flex flex-col justify-between '>
-        <div>
+      <div className='p-3 flex-1 flex flex-col'>
+        <div className='flex-1 flex flex-col justify-between'>
           {room ? 
-          <div className='overflow-y-scroll no-scrollbar max-h-[75vh]'>
+          <MessagesWindow messages={room.messages} roomId={roomId} />:
+          <div><Loader/></div>}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default Room
+
+{/* <div className='overflow-y-scroll no-scrollbar max-h-[75vh]'>
             {room.messages.map(message=>{
               if(message.username == user?.username){
                 return(
@@ -33,15 +58,4 @@ const Room = async ({roomId}:{roomId:string}) => {
                 </div>
               )
             })}
-          </div>:
-          <div><Loader/></div>}
-        </div>
-        <div className=''>
-          <SendMessageBox roomId={roomId} />
-        </div>
-      </div>
-    </div>
-  )
-}
-
-export default Room
+          </div> */}

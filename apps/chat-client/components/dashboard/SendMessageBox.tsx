@@ -1,12 +1,31 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Button from '../Button'
 import { useSession } from 'next-auth/react'
 import saveMessage from '@/app/lib/actions/saveMessage'
+import { getConnection } from '@/app/lib/websocket_actions/websocket_util'
 
 const SendMessageBox = ({roomId}:{roomId:string}) => {
   const session = useSession()
   const [message, setMessage] = useState("")
+  const ws = useRef<WebSocket | null>(null)
+  useEffect(()=>{
+    ws.current =  new WebSocket(process.env.WEBSOCKET_URL||"ws://localhost:8080")
+    ws.current.onopen = ()=>{
+      console.log("CONN");
+      if(ws.current){
+        ws.current.onmessage = (message)=>{
+          console.log(message.data);
+        }
+      }
+    }
+    ws.current.onclose = ()=>{
+      console.log("Closed");
+    }
+    return () => {
+      ws.current?.close()
+    }
+  },[roomId])
 
   return (
     <div className='flex items-center'>
@@ -20,8 +39,13 @@ const SendMessageBox = ({roomId}:{roomId:string}) => {
                 userId: session.data?.user.id,
                 roomId
             })
+             ws.current?.send(JSON.stringify({
+                type:"BROADCAST_MESSAGE",
+                roomId,
+                message:message,
+            }))
             setMessage("") 
-        }}>Send Message</Button>
+        }}>Send</Button>
     </div>
   )
 }

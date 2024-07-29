@@ -10,7 +10,7 @@ import React, { useState } from 'react'
 const SignInPage = () => {
     const router = useRouter()
   const [formdata, setFormdata] = useState({
-    username: '',
+    phone: '',
     password: ''
   })
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,7 +18,7 @@ const SignInPage = () => {
 }
 
 const handleSubmit = async () => {
-    if(formdata.username && formdata.password){
+    if(formdata.phone && formdata.password){
         console.log(formdata);
         
         const res = await signIn('credentials',{
@@ -35,10 +35,10 @@ const handleSubmit = async () => {
     <div>
         <div className='h-screen grid place-items-center bg-gray-800'>
         <NamedCard name='SignUp'>
-            <LabelledInput name='Username' placeholder='John Doe' type='text' onChange={handleChange} />
+            <LabelledInput name='Phone' placeholder='9876543211' type='text' onChange={handleChange} />
             <LabelledInput name='Password' placeholder='password' type='password' onChange={handleChange} />
             <Button onClick={async () => {
-    if(formdata.username && formdata.password){
+    if(formdata.phone && formdata.password){
         const res = await signIn('credentials',{
             ...formdata,
             redirect:false

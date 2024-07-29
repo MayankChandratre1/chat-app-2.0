@@ -16,10 +16,7 @@ const event_types = {
 
 const create_room = (socket: WebSocket, rooms:Map<String, WebSocketArray>, room_id:string)=>{
     if(rooms.get(room_id)){
-        socket.send(JSON.stringify({
-            type:event_types.ERROR,
-            message:'Room Already Exist'
-        }))
+        join_room(socket,rooms,room_id)
         return
     }
     rooms.set(room_id, [])

@@ -14,8 +14,8 @@ const saveMessage = async ({username, content, roomId, userId}:{
                 roomId,
             }
         })
-        console.log(res);
-        return res.id
+        
+        return res
     }
     return null
 }
