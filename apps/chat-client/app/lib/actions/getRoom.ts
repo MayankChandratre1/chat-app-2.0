@@ -10,7 +10,15 @@ const getRoom = async (roomId:string)=>{
         select:{
             messages:true,
             name:true,
-            members:true
+            image:true,
+            members:{
+                select:{
+                    email:true,
+                    phone:true,
+                    username:true,
+                    profile_pic:true
+                }
+            }
         }
     })
     return res    

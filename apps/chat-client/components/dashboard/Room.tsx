@@ -8,6 +8,7 @@ import Button from '../Button'
 import AddMember from './AddMember'
 import MessagesWindow from './MessagesWindow'
 import ViewRoom from './ViewRoom'
+import DeleteRoom from './DeleteRoom'
 
 
 const Room = async ({roomId}:{roomId:string}) => {
@@ -26,12 +27,13 @@ const Room = async ({roomId}:{roomId:string}) => {
     <div className='text-white col-span-6 flex flex-col max-h-screen'>
       <div className='px-5 py-3 flex items-center justify-between gap-5 text-2xl bg-black'>
           <div className='flex items-center gap-5'>
-            <Avatar name={room?.name} size='small' />
+            <Avatar image={room?.image} size='small' />
             <p>{room?.name}</p>
           </div>
           <div className='flex'>
-            <ViewRoom />
+            <ViewRoom roomId={roomId} />
             <AddMember roomId={roomId} />
+            <DeleteRoom roomId={roomId} />
           </div>
       </div>
       <div className='p-3 flex-1 flex flex-col'>

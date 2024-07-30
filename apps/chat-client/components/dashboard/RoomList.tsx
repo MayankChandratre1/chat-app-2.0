@@ -8,11 +8,13 @@ import create_room from '@/app/lib/websocket_actions/create_room'
 import {  useRouter } from 'next/navigation'
 import { create_websocket_room } from '@/app/lib/websocket_actions/websocket_util'
 import ProfileCard from './ProfileCard'
+import NewRoom from './NewRoom'
 
 const RoomList = ({rooms}:{
     rooms:{
         id: string;
-        name: string;
+        name:string;
+        image: string;
     }[]
 }) => {
   const router = useRouter()
@@ -20,7 +22,7 @@ const RoomList = ({rooms}:{
 
   return (
     <div className='text-white col-span-2 bg-gray-600 relative'>
-        {showModal ? <InputModal title='Create Room' buttonText='Create' onSubmit={async (inputField) => {
+        {/* {showModal ? <InputModal title='Create Room' buttonText='Create' onSubmit={async (inputField) => {
         if(inputField.trim().length > 0){
           const {success,room} = await create_room({name: inputField});
           if(success){
@@ -35,18 +37,18 @@ const RoomList = ({rooms}:{
         }
       }} onClick={()=>{
         setShowModal(false)
-      }} />:null}
+      }} />:null} */}
         <div className='px-3 py-2 flex items-center justify-between'>
             <p className='text-2xl font-bold'>Chat</p>
-            <Button onClick={()=> setShowModal(true)}>New</Button>
+            <NewRoom />
         </div>
         <div className='max-h-[80vh] overflow-y-scroll no-scrollbar'>
             {rooms.map((room)=> (
-                <RoomCard key={room.id} roomId={room.id} name={room.name} />
+                <RoomCard key={room.id} roomId={room.id} image={room.image} name={room.name} />
             ))}
             
         </div>
-        <div className=' h-16 w-full absolute bottom-0 z-10'>
+        <div className='h-16 w-[95%] absolute bottom-0 z-10'>
             <ProfileCard />
         </div>
     </div>
@@ -54,16 +56,16 @@ const RoomList = ({rooms}:{
 }
 
 
-const RoomCard = ({roomId, name}:{roomId:string, name:string})=>{
+const RoomCard = ({roomId, image, name}:{roomId:string, image:string, name:string})=>{
     const router = useRouter()
     return (
         <button className='w-full bg-gray-700 p-3 flex gap-3 items-center border-b border-b-gray-800 hover:bg-gray-800' onClick={()=>{
             // create_websocket_room({roomId})
             router.push("/dashboard/"+roomId)
         }}>
-            <Avatar size='small' name={name} />
+            <Avatar size='small' image={image} />
             <div>
-                <h4 className='text-lg'>{name}</h4>
+                <h4 className='text-md text-start'>{name}</h4>
                 {/* <p className='text-sm text-gray-400'>Sometext</p> */}
             </div>
         </button>

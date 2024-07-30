@@ -119,7 +119,7 @@ const EditProfile = ({user}:{
             <fieldset className='grid grid-cols-3 border border-gray-600 bg-gray-800 rounded-2xl px-5 py-4 gap-5 mb-5'>
                 <legend className='  text-3xl'>Profile Photo</legend>
                 <div className='grid place-items-center'>
-                <img src={formdata.image} alt="a profile image" className={`w-52 h-52 rounded-full object-cover`} />
+                    <img src={formdata.image} alt="a profile image" className={`w-52 h-52 rounded-full object-cover`} />
                 </div>
                 <div className='col-span-2 flex flex-col justify-center'>
                     <input type="file" accept='.png, .jpg, .jpeg, .webp' onChange={async (e)=>{

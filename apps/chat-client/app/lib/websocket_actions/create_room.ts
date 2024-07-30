@@ -2,12 +2,13 @@
 import prisma from "@repo/db/prisma"
 import getUser from "../actions/getUser"
 import { log } from "console"
-const create_room = async ({name}:{name:string}) => {
+const create_room = async ({name,image}:{name:string,image:string}) => {
     const user = await getUser()
     try{
         const room = await prisma.room.create({
             data:{
                 name,
+                image,
                 members:{
                     connect:{
                         email: user?.email
