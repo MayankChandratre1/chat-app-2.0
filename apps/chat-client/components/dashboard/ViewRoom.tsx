@@ -1,8 +1,14 @@
-import React from 'react'
+"use client"
+import React, { useState } from 'react'
+import Button from '../Button'
 
 const ViewRoom = () => {
+  const [showModal, setShowModal] = useState(false)
   return (
-    <div>ViewRoom</div>
+    <div className='text-sm'>
+
+        <Button onClick={()=> setShowModal(true)}>View Info</Button>
+    </div>
   )
 }
 

@@ -7,6 +7,7 @@ import InputModal from './InputModal'
 import create_room from '@/app/lib/websocket_actions/create_room'
 import {  useRouter } from 'next/navigation'
 import { create_websocket_room } from '@/app/lib/websocket_actions/websocket_util'
+import ProfileCard from './ProfileCard'
 
 const RoomList = ({rooms}:{
     rooms:{
@@ -18,7 +19,7 @@ const RoomList = ({rooms}:{
   const [showModal, setShowModal] = useState(false)
 
   return (
-    <div className='text-white col-span-2 bg-gray-600'>
+    <div className='text-white col-span-2 bg-gray-600 relative'>
         {showModal ? <InputModal title='Create Room' buttonText='Create' onSubmit={async (inputField) => {
         if(inputField.trim().length > 0){
           const {success,room} = await create_room({name: inputField});
@@ -39,11 +40,14 @@ const RoomList = ({rooms}:{
             <p className='text-2xl font-bold'>Chat</p>
             <Button onClick={()=> setShowModal(true)}>New</Button>
         </div>
-        <div className='max-h-[88vh] overflow-y-scroll no-scrollbar'>
+        <div className='max-h-[80vh] overflow-y-scroll no-scrollbar'>
             {rooms.map((room)=> (
                 <RoomCard key={room.id} roomId={room.id} name={room.name} />
             ))}
             
+        </div>
+        <div className=' h-16 w-full absolute bottom-0 z-10'>
+            <ProfileCard />
         </div>
     </div>
   )

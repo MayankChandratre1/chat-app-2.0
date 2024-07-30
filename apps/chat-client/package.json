@@ -10,10 +10,12 @@
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "cwebp": "^3.1.0",
     "next": "14.2.5",
     "next-auth": "^4.24.7",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "webp-converter": "^2.3.3"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",

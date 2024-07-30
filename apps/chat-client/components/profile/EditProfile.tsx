@@ -1,5 +1,6 @@
 "use client"
 import React, { ChangeEvent, useState } from 'react'
+
 import LabelledInput from '../LabelledInput'
 import Avatar from '../Avatar'
 import updateUser from '@/app/lib/actions/updateUser'
@@ -7,7 +8,7 @@ import Button from '../Button'
 import { signOut } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-
+import comparePassword from '@/app/lib/actions/comparePassword'
 
 const EditProfile = ({user}:{
     user: { id:string, email: string; phone: string | null; username: string; profile_pic: string; rooms: { id: string; name: string; }[]; } | null
@@ -18,6 +19,10 @@ const EditProfile = ({user}:{
         username:user?.username,
         image:user?.profile_pic
     })
+
+    const [newPassword, setNewPassword] = useState<string>("")
+    const [confirmPassword, setConfirmPassword] = useState<string>("")
+    const [currentPassword, setCurrentPassword] = useState<string>("")
 
     if(!user){
         return (
@@ -50,6 +55,30 @@ const EditProfile = ({user}:{
         })
         router.push("/auth/signin")
     }
+    const handlePasswordSubmit:React.FormEventHandler<HTMLFormElement> = async (e)=>{
+        e.preventDefault()
+        
+        
+        if(currentPassword.trim() != ""){
+            const res = await comparePassword(user.id,currentPassword)
+            if(res){
+                if(newPassword === confirmPassword){
+                    const updated_user = await updateUser({
+                        update_data:{
+                            password:confirmPassword
+                        },
+                        id:user.id
+                    })
+                    console.log(updated_user);
+                    await signOut({
+                        redirect:false
+                    })
+                    router.push("/auth/signin")
+                }
+            }
+        }
+        
+    }
 
     const toBase64:(file:Blob) => Promise<string | ArrayBuffer | null> = async (file:Blob) => {
         return new Promise((res, rej)=>{
@@ -67,7 +96,7 @@ const EditProfile = ({user}:{
     const handleFileUpload = async (e:ChangeEvent<HTMLInputElement>) => {
         
         if(e.target.files){
-            if(Number(e.target.files[0].size) > 3000000){
+            if(Number(e.target.files[0].size) > 800000){
                 alert("Please choose a smaller image")
                 e.target.value = ""
                 return user.profile_pic
@@ -80,7 +109,7 @@ const EditProfile = ({user}:{
     }
 
   return (
-    <div className='text-white p-5'>
+    <div className='text-white px-5 py-2'>
         <form onSubmit={handleSubmit}>
             <fieldset className='grid grid-cols-2 border border-gray-600 bg-gray-800 rounded-2xl px-5 py-2 gap-5 mb-5'>
                 <legend className='  text-3xl'>Contact Information</legend>
@@ -102,7 +131,7 @@ const EditProfile = ({user}:{
                     }}
                     className='block w-full bg-gray-700 rounded-xl text-sm text-gray-500  file:bg-gray-500 file:inline-block file:border-none file:py-2 file:mr-2  file:text-gray-300 cursor-pointer file:cursor-pointer file:hover:bg-gray-600'
                     />
-                    <p  className='mt-2 px-3 text-xs text-gray-500 italic font-mono'>only .png .jpg .jpeg .webp (under 1MB)</p>
+                    <p  className='mt-2 px-3 text-xs text-gray-500 italic font-mono'>only .png .jpg .jpeg .webp (under 800Kb)</p>
                 </div>
             </fieldset>
             <div className='flex items-center'>
@@ -110,6 +139,23 @@ const EditProfile = ({user}:{
                 <p className='text-xs text-gray-500 italic'>You will Need to Sign In again after update...</p>
             </div>
         </form>
+            <div>
+                <form onSubmit={handlePasswordSubmit}>
+                <fieldset className='grid grid-cols-3 border border-gray-600 bg-gray-800 rounded-2xl px-5 py-2 gap-5 mb-5'>
+                <legend className='  text-3xl'>Contact Information</legend>
+                <LabelledInput name='Current Password' type='password' value={currentPassword} placeholder="Can't be empty" onChange={(e)=>{
+                    setCurrentPassword(e.target.value)
+                }} />
+                <LabelledInput name='New Password' type='password' value={newPassword} placeholder="Can't be empty" onChange={(e)=>{
+                    setNewPassword(e.target.value)
+                }} />
+                <LabelledInput name='Confirm Password' type='password' value={confirmPassword} placeholder="Can't be empty" onChange={(e)=>{
+                    setConfirmPassword(e.target.value)
+                }} />
+            </fieldset>
+                <Button type='submit'>Change Password</Button>
+                </form>
+            </div>
     </div>
   )
 }

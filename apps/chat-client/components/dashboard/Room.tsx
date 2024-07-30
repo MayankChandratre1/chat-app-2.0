@@ -7,6 +7,7 @@ import getUser from '@/app/lib/actions/getUser'
 import Button from '../Button'
 import AddMember from './AddMember'
 import MessagesWindow from './MessagesWindow'
+import ViewRoom from './ViewRoom'
 
 
 const Room = async ({roomId}:{roomId:string}) => {
@@ -28,7 +29,10 @@ const Room = async ({roomId}:{roomId:string}) => {
             <Avatar name={room?.name} size='small' />
             <p>{room?.name}</p>
           </div>
-          <AddMember roomId={roomId} />
+          <div className='flex'>
+            <ViewRoom />
+            <AddMember roomId={roomId} />
+          </div>
       </div>
       <div className='p-3 flex-1 flex flex-col'>
         <div className='flex-1 flex flex-col justify-between'>
