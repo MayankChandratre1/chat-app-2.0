@@ -15,7 +15,7 @@ export default function Home() {
       <Loader />
   </div>
     )
-  }else if(user.status == "unauthenticated"){
+  }else if(!user.data){
     router.push("/auth/signin")
   }else{
     setTimeout(()=>{

@@ -7,13 +7,16 @@ WORKDIR /usr/app
 COPY package*.json  turbo.json entrypoint.sh ./
 COPY ./packages ./packages
 COPY ./apps ./apps
-COPY . .
 #Install dependencies
 RUN npm install
+ENV DATABASE_URL=postgresql://postgres:secret@db:5432/postgres
 
 #installing prisma
 WORKDIR /usr/app/packages/db
 RUN npm install
 
 WORKDIR /usr/app
+
+EXPOSE 3000 3001
+
 CMD [ "sh","/usr/app/entrypoint.sh" ]

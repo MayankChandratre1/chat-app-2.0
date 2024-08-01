@@ -45,9 +45,13 @@ const handleFileUpload = async (e:React.ChangeEvent<HTMLInputElement>) => {
 }
 
 const handleSubmit = async ()=>{
-    if(name && image){
+    if(name){
         const {success, room} = await create_room({name,image})
-        router.push("/dashboard/base")
+        if(success){
+            router.push("/dashboard/"+room?.id)
+        }else{
+            alert("Room Cannot be created for some reason, try changing name")
+        }
     }
 }
   

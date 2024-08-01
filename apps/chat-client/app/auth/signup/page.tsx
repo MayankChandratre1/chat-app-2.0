@@ -25,7 +25,7 @@ const SignUpPage = () => {
         const signUpResult = await signup(formdata);
         if(signUpResult && !signUpResult.error){
           const res = await signIn('credentials',{
-            username: formdata.username,
+            phone: formdata.phone,
             password: formdata.password,
             redirect: false
           })

@@ -13,7 +13,7 @@ model User {
   phone String? @unique
   username     String 
   password String
-  profile_pic String @default("https://avatar.iran.liara.run/public/boy")
+  profile_pic String @default("https://api.dicebear.com/7.x/adventurer-neutral/svg?seed=mail@ashallendesign.co.uk")
   rooms    Room[]   
 
 }
