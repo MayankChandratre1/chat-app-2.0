@@ -27,8 +27,8 @@ jobs:
             
             - name: Deploy to azure vm
               run: |
-                ssh -o StrictHostKeyChecking=yes mayank@20.244.6.69 << 'EOF'
-                    cd /chatapp
+                ssh -o StrictHostKeyChecking=yes mayank@20.244.44.28 << 'EOF'
+                    cd /chatapp/chat-app-2.0
                     git pull origin main
                     docker-compose down
                     docker-compose up -d --build
