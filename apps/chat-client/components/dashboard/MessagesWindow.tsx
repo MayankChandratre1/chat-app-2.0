@@ -67,47 +67,7 @@ const MessagesWindow = ({messages, roomId}:{
       ws.current?.close()
     }
   },[roomId, messagesList])
-  // useEffect(()=>{
-  //   ws.current =  new WebSocket(process.env.WEBSOCKET_URL||"ws://localhost:8080")
-  //   ws.current.onopen = ()=>{
-  //     console.log("CONN");
-  //     ws.current?.send(JSON.stringify({
-  //       type:"JOIN_ROOM",
-  //       roomId
-  //     }))
-  //     if(ws.current){
-  //       ws.current.onmessage = async (mes)=>{
-  //         const data:{
-  //           type: string,
-  //           message:string
-  //         } = await JSON.parse(mes.data)
-  //         console.log(mes);
-          
-  //         if(data.type === 'CHAT'){
-  //           const message_data = await JSON.parse(data.message)
-  //           console.log(message_data);
-  //           const new_message_data = {
-  //             ...message_data,
-  //             createdAt: new Date(message_data.createdAt)
-  //           }
-  //           setMessagesList(prev => [...prev, new_message_data])
-  //         }
-  //       }
-  //     }
-  //   }
-  //   ws.current.onclose = ()=>{
-  //     console.log("Closed");
-  //   }
-  //   return () => {
-  //     if(ws.current?.readyState === WebSocket.OPEN){
-  //       ws.current?.send(JSON.stringify({
-  //         type:"LEAVE_ROOM",
-  //         roomId:roomId
-  //       }))
-  //     }
-  //     ws.current?.close()
-  //   }
-  // },[roomId, messagesList])
+  
 
 
 
@@ -118,13 +78,13 @@ const MessagesWindow = ({messages, roomId}:{
             {messagesList.map(message=>{
               if(message.username == session?.data?.user.username){
                 return(
-                  <div className='my-4 mx-1 flex flex-col gap-1 items-end text-sm '>
+                  <div key={message.id} className='my-4 mx-1 flex flex-col gap-1 items-end text-sm '>
                     <span className='text-green-500 text-xs opacity-90 font-semibold px-3'>{"You"}</span> <p className='px-3 py-2 bg-blue-500 rounded-2xl'>{message.content}</p><p className='text-xs font-thin opacity-50 py-1'>{message.createdAt.toUTCString().split(' ')[1] + " " + message.createdAt.toUTCString().split(' ')[2] + ", " + message.createdAt.toUTCString().split(' ')[4]}</p>
                   </div>
                 )
               }
               return(
-                <div className='my-4 mx-1 flex flex-col gap-1 items-start text-sm'>
+                <div key={message.id} className='my-4 mx-1 flex flex-col gap-1 items-start text-sm'>
                   <span className='text-blue-600 text-xs opacity-90 font-semibold px-3'>{message.username ? message.username:"Anonymus"}</span> <p className='px-3 py-2 bg-blue-500 rounded-2xl'>{message.content}</p><p className='text-xs font-thin opacity-50 py-1'>{message.createdAt.toUTCString().split(' ')[1] + " " + message.createdAt.toUTCString().split(' ')[2] + ", " + message.createdAt.toUTCString().split(' ')[4]}</p>
                 </div>
               )
