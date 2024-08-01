@@ -54,7 +54,7 @@ const handleSubmit = async () => {
         router.push("/auth/signin")
     }
 }}>Sign In</Button>
-            <div className='text-sm text-gray-400'>Don't Have a account? <Link href={"/auth/signup"} className='italic underline hover:text-white'>Create one</Link></div>
+            <div className='text-sm text-gray-400'>Don&apos;t Have a account? <Link href={"/auth/signup"} className='italic underline hover:text-white'>Create one</Link></div>
         </NamedCard>
     </div>
     </div>

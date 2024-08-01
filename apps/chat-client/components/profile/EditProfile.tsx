@@ -9,6 +9,7 @@ import { signOut } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import comparePassword from '@/app/lib/actions/comparePassword'
+import Image from 'next/image'
 
 const EditProfile = ({user}:{
     user: { id:string, email: string; phone: string | null; username: string; profile_pic: string; rooms: { id: string; name: string; }[]; } | null
@@ -23,6 +24,7 @@ const EditProfile = ({user}:{
     const [newPassword, setNewPassword] = useState<string>("")
     const [confirmPassword, setConfirmPassword] = useState<string>("")
     const [currentPassword, setCurrentPassword] = useState<string>("")
+    const router = useRouter()
 
     if(!user){
         return (
@@ -35,7 +37,7 @@ const EditProfile = ({user}:{
         )
     }
 
-    const router = useRouter()
+    
     const handleChange:React.ChangeEventHandler<HTMLInputElement> = (e)=>{
         setFormdata({
             ...formdata,
@@ -119,7 +121,7 @@ const EditProfile = ({user}:{
             <fieldset className='grid grid-cols-3 border border-gray-600 bg-gray-800 rounded-2xl px-5 py-4 gap-5 mb-5'>
                 <legend className='  text-3xl'>Profile Photo</legend>
                 <div className='grid place-items-center'>
-                    <img src={formdata.image} alt="a profile image" className={`w-52 h-52 rounded-full object-cover`} />
+                    <Image src={formdata.image || ""} alt='Profile' width={150} height={150} className={`w-52 h-52 rounded-full object-cover`}  />
                 </div>
                 <div className='col-span-2 flex flex-col justify-center'>
                     <input type="file" accept='.png, .jpg, .jpeg, .webp' onChange={async (e)=>{
