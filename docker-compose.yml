@@ -21,8 +21,9 @@ services:
       - 8080:8080
     environment:
       - DATABASE_URL=postgresql://postgres:secret@db:5432/postgres
-      - NEXTAUTH_URL=http://20.244.6.69:3000
+      - NEXTAUTH_URL=http://20.244.44.28:3000
       - NEXTAUTH_SECRET=secret
+      - WEBSOCKET_URL=ws://20.244.44.28:8080
 
 volumes:
   pgdata:

@@ -1,6 +1,7 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from '@repo/db/prisma'
 import bcrypt from "bcrypt"
+import { url } from "inspector";
 const authOptions = {
 providers: [
   CredentialsProvider({
@@ -31,7 +32,8 @@ providers: [
     }
   })
 ],
-secrets: process.env.NEXTAUTH_SECRET || "secret",
+secret: process.env.NEXTAUTH_SECRET || "secret",
+url: process.env.NEXTAUTH_URL || "http://localhost:3000",
 pages:{
   signIn:"/auth/signin"
 },
