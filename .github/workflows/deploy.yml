@@ -23,8 +23,7 @@ jobs:
             - name: Add Known Hosts
               run: |
                 mkdir -p ~/.ssh
-                echo "${{secrets.KNOWN_HOSTS}}" > ~/.ssh/known_hosts
-                chmod 644 ~/.ssh/known_hosts
+                echo "${{secrets.KNOWN_HOSTS}}" >> ~/.ssh/known_hosts
             
             - name: Deploy to azure vm
               run: |
