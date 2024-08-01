@@ -8,8 +8,7 @@ const AppBar = () => {
     const data = useSession()?.data?.user
   return (
     <div>
-        <img src={data?.image} />
-        {data?.id}
+      Appbar
     </div>
   )
 }
