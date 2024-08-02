@@ -2,6 +2,11 @@
 import prisma from "@repo/db/prisma"
 const deleteRoom = async (roomId:string) => {
     try{
+        await prisma.message.deleteMany({
+            where:{
+                roomId:roomId
+            }
+        })
         await prisma.room.delete({
             where:{
                 id:roomId,
