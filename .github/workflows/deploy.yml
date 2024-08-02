@@ -26,6 +26,10 @@ jobs:
                 echo "${{secrets.SSH_KNOWN_HOSTS}}" > ~/.ssh/known_hosts
             
             - name: Deploy to azure vm
+              env:
+                NEXTAUTH_URL: ${{secrets.NEXAUTH_URL}}
+                NEXTAUTH_SECRET: ${{secrets.NEXAUTH_SECRET}}
+                WEBSOCKET_URL: ${{secrets.WEBSOCKET_URL}}
               run: |
                 ssh -o StrictHostKeyChecking=yes mayank@20.244.44.28 << 'EOF'
                     cd ~/chatapp/chat-app-2.0
