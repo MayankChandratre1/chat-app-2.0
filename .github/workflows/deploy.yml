@@ -27,11 +27,12 @@ jobs:
             
             - name: Deploy to azure vm
               env:
+                DATABASE_URL: ${{secrets.DATABASE_URL}}
                 NEXTAUTH_URL: ${{secrets.NEXAUTH_URL}}
                 NEXTAUTH_SECRET: ${{secrets.NEXAUTH_SECRET}}
                 WEBSOCKET_URL: ${{secrets.WEBSOCKET_URL}}
               run: |
-                ssh -o StrictHostKeyChecking=yes mayank@20.244.44.28 << 'EOF'
+                ssh -o StrictHostKeyChecking=yes ${{secrets.VM_USERNAME}}@${{secrets.VM_IP}} << 'EOF'
                     cd ~/chatapp/chat-app-2.0
                     git pull origin main
                     sudo docker-compose down
