@@ -1,27 +1,25 @@
-"use server"
-import { getServerSession } from "next-auth"
-import authOptions from "../authOptions"
-import prisma from "@repo/db/prisma"
-const getRoom = async (roomId:string)=>{
-    const res = await prisma.room.findFirst({
-        where:{
-            id:roomId
+"use server";
+import prisma from "@repo/db/prisma";
+const getRoom = async (roomId: string) => {
+  const res = await prisma.room.findFirst({
+    where: {
+      id: roomId,
+    },
+    select: {
+      messages: true,
+      name: true,
+      image: true,
+      members: {
+        select: {
+          email: true,
+          phone: true,
+          username: true,
+          profile_pic: true,
         },
-        select:{
-            messages:true,
-            name:true,
-            image:true,
-            members:{
-                select:{
-                    email:true,
-                    phone:true,
-                    username:true,
-                    profile_pic:true
-                }
-            }
-        }
-    })
-    return res    
-}
+      },
+    },
+  });
+  return res;
+};
 
-export default getRoom
+export default getRoom;

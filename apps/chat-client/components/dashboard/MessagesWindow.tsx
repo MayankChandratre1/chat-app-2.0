@@ -21,7 +21,7 @@ const MessagesWindow = ({messages, roomId}:{
   useEffect(()=>{
     ws.current =  new WebSocket(process.env.WEBSOCKET_URL||"ws://localhost:8080")
     ws.current.onopen = ()=>{
-      console.log("CONN");
+      // console.log("CONN");
       ws.current?.send(JSON.stringify({
         type:"CREATE_ROOM",
         roomId
@@ -49,7 +49,7 @@ const MessagesWindow = ({messages, roomId}:{
               }
               default:break;
           }
-          console.log("WS_LOGIC: "+ JSON.stringify(data));
+          // console.log("WS_LOGIC: "+ JSON.stringify(data));
           
       }
       }
