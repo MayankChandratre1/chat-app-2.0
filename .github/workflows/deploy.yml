@@ -33,10 +33,10 @@ jobs:
                 WEBSOCKET_URL: ${{secrets.WEBSOCKET_URL}}
               run: |
                 echo "DATABASE_URL=${{secrets.DATABASE_URL}}" > .env
-                echo "NEXTAUTH_URL=${{secrets.NEXTAUTH_URL}}" >> .env
-                echo "NEXTAUTH_SECRET=${{secrets.NEXTAUTH_SECRET}}" >> .env
+                echo "NEXTAUTH_URL=${{secrets.NEXAUTH_URL}}" >> .env
+                echo "NEXTAUTH_SECRET=${{secrets.NEXAUTH_SECRET}}" >> .env
                 echo "WEBSOCKET_URL=${{secrets.WEBSOCKET_URL}}" >> .env
-                scp -o StrictHostKeyChecking=no .env ${{ secrets.SSH_USERNAME }}@${{ secrets.VM_IP }}:~/chat-app/chat-app-2.0/.env
+                scp -o StrictHostKeyChecking=no .env ${{ secrets.VM_USERNAME }}@${{ secrets.VM_IP }}:~/chat-app/chat-app-2.0/.env
                 ssh -o StrictHostKeyChecking=yes ${{secrets.VM_USERNAME}}@${{secrets.VM_IP}} << 'EOF'
                     cd ~/chatapp/chat-app-2.0
                     git pull origin main
