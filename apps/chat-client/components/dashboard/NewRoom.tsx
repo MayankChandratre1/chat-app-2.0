@@ -88,7 +88,7 @@ const handleSubmit = async ()=>{
                     <p  className='mt-2 px-3 text-xs text-gray-500 italic font-mono'>only .png .jpg .jpeg .webp (under 800Kb)</p>
                         </div>
                      </fieldset>
-                     <Button className='bg-green-500 w-full border-green-600'>Create</Button>
+                     <Button className='bg-green-500 w-full border-green-600' type='submit'>Create</Button>
                     </form>
                 </div>
             </div>

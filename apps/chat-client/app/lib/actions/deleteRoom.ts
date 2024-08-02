@@ -4,7 +4,7 @@ const deleteRoom = async (roomId:string) => {
     try{
         await prisma.room.delete({
             where:{
-                id:roomId
+                id:roomId,
             }
         })
         return {
